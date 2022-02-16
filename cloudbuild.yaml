@@ -13,7 +13,7 @@ steps:
   entrypoint: npm
   args: ['run', 'build']
 # [END cloudbuild_npm_node]
- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['auth', 'configure-docker', 'asia-south1-docker.pkg.dev', '--quiet' ]
