@@ -21,3 +21,23 @@ steps:
   args: ['push', 'asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA']
 #this is test repo
 #This is main branch
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/']
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=suchita-cluster-test'
+#step 4
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: [
+   'set', 
+   'image', 
+   'deployment', 
+   'my-source-repo-suchita', 
+   'my-source-repo-suchita=asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA'
+  ]
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=suchita-cluster-test'
+images: 
+- 'asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA'
+
