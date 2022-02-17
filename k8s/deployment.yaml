@@ -1,42 +1,21 @@
----
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: "nodejs-deployment"
-  namespace: "default"
   labels:
-    app: "nodejs-deployment"
+    run: my-source-repo-suchita
+  name: my-source-repo-suchita
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: "nodejs-deployment"
+      run: my-source-repo-suchita
   template:
     metadata:
       labels:
-        app: "nodejs-deployment"
+        run: my-source-repo-suchita
     spec:
       containers:
-      - name: "nodejs-proj-sha256-1"
-        image: "asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj@sha256:4609c836fff2934d6569034e73dc306d6e76c2653fecbd16651eed37dd29e934"
----
-apiVersion: "autoscaling/v2beta1"
-kind: "HorizontalPodAutoscaler"
-metadata:
-  name: "nodejs-deployment-hpa-d64r"
-  namespace: "default"
-  labels:
-    app: "nodejs-deployment"
-spec:
-  scaleTargetRef:
-    kind: "Deployment"
-    name: "nodejs-deployment"
-    apiVersion: "apps/v1"
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-  - type: "Resource"
-    resource:
-      name: "cpu"
-      targetAverageUtilization: 80
-
+      - image: asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA
+        name: my-source-repo-suchita
+        ports:
+        - containerPort: 3000
