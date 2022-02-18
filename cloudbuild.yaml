@@ -40,7 +40,7 @@ steps:
   - 'CLOUDSDK_CONTAINER_CLUSTER=suchita-cluster-gke'
 options:
   workerPool:
-    'projects/business-transformers/locations/us-central1/workerPools/suchita-pvt-worker-pool'
+    'projects/$GOOGLE_CLOUD_PROJECT/locations/us-central1/workerPools/suchita-pvt-worker-pool'
 images: 
 - 'asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA'
 
