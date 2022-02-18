@@ -39,7 +39,7 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=suchita-cluster-gke'
 options:
-  pool:
+  workerPool:
     name: 'projects/$WORKERPOOL_PROJECT_ID/locations/$REGION/workerPools/my-pool'
 #options:
   #workerPool:
