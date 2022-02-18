@@ -39,8 +39,8 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=suchita-cluster-gke'
 options:
-  pool:
-  - name: 'projects/business-transformers/locations/us-central1/workerPools/suchita-pvt-worker-pool'
+  workerPool:
+   'projects/business-transformers/locations/us-central1/workerPools/suchita-pvt-worker-pool'
 #options:
   #workerPool:
     #'projects/$GOOGLE_CLOUD_PROJECT/locations/us-central1/workerPools/suchita-pvt-worker-pool'
