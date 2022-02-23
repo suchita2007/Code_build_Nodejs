@@ -43,7 +43,19 @@ pipeline {
            }
     
        }
-    
+      
+        stage('Deploy Staging') {
+            steps{
+                git url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+                step([$class: 'KubernetesEngineBuilder', 
+                        projectId: "business-transformers",
+                        clusterName: "cluster-vatan-public",
+                        zone: "us-central1-c",
+                        manifestPattern: 'k8s/',
+                        credentialsId: "business-transformers",
+                        verifyDeployments: true])
+            }
+        }
     
     
 }
