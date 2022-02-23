@@ -32,14 +32,14 @@ pipeline {
     stage('Build Docker image'){
           steps{
                
-               sh 'docker build -t asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA .'
+               sh 'docker build -t asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:${BUILD_NUMBER} .'
           }
       }
     
     stage('Docker push to Artifact Registry')
     {       steps{
                 sh 'gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet'
-                sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA'
+                sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:${BUILD_NUMBER}'
            }
     
        }
