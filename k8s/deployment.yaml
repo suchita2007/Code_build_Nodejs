@@ -15,7 +15,7 @@ spec:
         run: my-source-repo-suchita
     spec:
       containers:
-      - image: asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:${BUILD_NUMBER}
+      - image: asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:5
         name: my-source-repo-suchita
         ports:
         - containerPort: 3000
