@@ -46,7 +46,7 @@ pipeline {
       
         stage('Deploy Staging') {
             steps{
-                git url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+                git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
                         clusterName: "cluster-vatan-public",
