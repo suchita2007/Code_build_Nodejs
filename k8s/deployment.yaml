@@ -5,7 +5,7 @@ metadata:
     run: my-source-repo-suchita
   name: my-source-repo-suchita
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       run: my-source-repo-suchita
