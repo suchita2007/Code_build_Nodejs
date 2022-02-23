@@ -32,7 +32,7 @@ pipeline {
                sh 'docker build -t suchita2007/node-js .'
           }
       }
-    stage('Docker push to Ecr')
+    stage('Docker push to DockerHub')
        {       steps{
                   withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD2', variable: 'DOCKER_HUB_PASSWORD2')]) {
                               sh 'docker login -u suchita2007 -p ${DOCKER_HUB_PASSWORD2}'
