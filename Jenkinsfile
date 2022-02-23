@@ -56,6 +56,19 @@ pipeline {
                         verifyDeployments: true])
             }
         }
+    stage('Wait for SRE Approval') {
+         steps{
+           timeout(time:12, unit:'HOURS') {
+              input message:'Approve deployment?', submitter: 'sre-approvers'
+           }
+         }
+        }
+        stage('Hello Print stage') {
+         steps{
+           sh 'echo hello world'
+           }
+         }
+        }
     
     
 }
