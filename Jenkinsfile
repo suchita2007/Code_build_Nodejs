@@ -38,7 +38,7 @@ pipeline {
     
     stage('Docker push to Artifact Registry')
     {       steps{
-                sh 'gcloud auth configure-docker asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj'
+                sh 'gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet'
                 sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj'
            }
     
