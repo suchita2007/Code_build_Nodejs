@@ -27,11 +27,7 @@ pipeline {
       }
     } 
     
-   # stage('Build Docker image'){
-          #steps{
-           #    sh 'docker build -t suchita2007/node-js .'
-          #}
-      #}
+
     
     stage('Build Docker image'){
           steps{
@@ -40,12 +36,10 @@ pipeline {
       }
     
     stage('Docker push to Artifact Registry')
-       {       #steps{
-                #  withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD2', variable: 'DOCKER_HUB_PASSWORD2')]) {
-                 #             sh 'docker login -u suchita2007 -p ${DOCKER_HUB_PASSWORD2}'
-                #}
+    {       steps{
                 sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj'
            }
+    
        }
     
     
