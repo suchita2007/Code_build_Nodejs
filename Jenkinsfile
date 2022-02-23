@@ -27,12 +27,9 @@ pipeline {
       }
     } 
     
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
+    stage('Build Docker image'){
+          steps{
+               sh 'docker build -t suchita2007/node-js .'
+          }
   }
 }
