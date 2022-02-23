@@ -31,12 +31,14 @@ pipeline {
     
     stage('Build Docker image'){
           steps{
+               
                sh 'docker build -t asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj .'
           }
       }
     
     stage('Docker push to Artifact Registry')
     {       steps{
+                sh 'gcloud auth configure-docker asia-south1-docker.pkg.dev'
                 sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj'
            }
     
