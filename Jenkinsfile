@@ -5,7 +5,7 @@ pipeline {
         
     stage('Git') {
       steps {
-        git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+        git branch: 'main', credentialsId: 'github', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
       }
     }
      
@@ -44,9 +44,9 @@ pipeline {
     
        }
       
-        stage('Deploy Staging') {
-            steps{
-                git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+       // stage('Deploy Staging') {
+         //   steps{
+           /*     git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
                         clusterName: "cluster-vatan-public",
@@ -55,7 +55,7 @@ pipeline {
                         credentialsId: "business-transformers",
                         verifyDeployments: true])
             }
-        }
+        }*/
     stage('Wait for SRE Approval') {
          steps{
            timeout(time:12, unit:'HOURS') {
@@ -73,8 +73,8 @@ pipeline {
                  git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
-                        clusterName: "cluster-suchita-public",
-                        zone: "asia-south1-c",
+                        clusterName: "cluster-suchita-private",
+                        zone: "us-central1-a",
                         manifestPattern: 'k8s/',
                         credentialsId: "business-transformers",
                         verifyDeployments: true])
