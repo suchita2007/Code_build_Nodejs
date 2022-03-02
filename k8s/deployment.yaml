@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: my-source-repo-suchita-1
-  name: my-source-repo-suchita-1
+    run: my-source-repo-suchita-dev
+  name: my-source-repo-suchita-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: my-source-repo-suchita-1
+      run: my-source-repo-suchita-dev
   template:
     metadata:
       labels:
-        run: my-source-repo-suchita-1
+        run: my-source-repo-suchita-dev
     spec:
       containers:
-      - image: asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:$SHORT_SHA
-        name: my-source-repo-suchita-1
+      - image: asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj-dev:$SHORT_SHA
+        name: my-source-repo-suchita-dev
         ports:
         - containerPort: 3000
