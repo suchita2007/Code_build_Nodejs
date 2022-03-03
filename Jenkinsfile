@@ -79,7 +79,8 @@ pipeline {
 
        stage('Deploy Production') {
             steps{
-                 git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+                 //git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+                //sh 'sed -i "s!currenttag!${BUILD_NUMBER}!g" k8s/deployment.yaml '
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
                         clusterName: "cluster-suchita-private",
