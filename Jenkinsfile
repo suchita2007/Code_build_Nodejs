@@ -49,8 +49,8 @@ pipeline {
            /*     git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
-                        clusterName: "cluster-vatan-public",
-                        zone: "us-central1-c",
+                        clusterName: "cluster-vatan",
+                        zone: "asia-south1",
                         manifestPattern: 'k8s/',
                         credentialsId: "business-transformers",
                         verifyDeployments: true])
@@ -83,8 +83,8 @@ pipeline {
                 //sh 'sed -i "s!currenttag!${BUILD_NUMBER}!g" k8s/deployment.yaml '
                 step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
-                        clusterName: "cluster-suchita-private",
-                        zone: "us-central1-a",
+                        clusterName: "cluster-vatan",
+                        zone: "asia-south1",
                         manifestPattern: 'k8s/',
                         credentialsId: "business-transformers",
                         verifyDeployments: true])
