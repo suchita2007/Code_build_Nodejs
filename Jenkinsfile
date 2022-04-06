@@ -81,13 +81,16 @@ pipeline {
             steps{
                  //git branch: 'main', credentialsId: 'github-1', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
                 //sh 'sed -i "s!currenttag!${BUILD_NUMBER}!g" k8s/deployment.yaml '
-                step([$class: 'KubernetesEngineBuilder', 
+              sh 'gcloud container clusters get-credentials cluster-vatan --zone asia-south1 --project business-transformers'
+              sh 'kubectl apply -f k8s-dev/'
+
+               /* step([$class: 'KubernetesEngineBuilder', 
                         projectId: "business-transformers",
                         clusterName: "cluster-vatan",
                         zone: "asia-south1",
                         manifestPattern: 'k8s/',
                         credentialsId: "business-transformers",
-                        verifyDeployments: true])
+                        verifyDeployments: true])*/
             }
         } 
     
