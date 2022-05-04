@@ -82,7 +82,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'gitlabsuchita', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         sh "git config user.email '${GIT_CONFIG_EMAIL}' "
                                                             sh "git config user.name '${GIT_CONFIG_USERNAME}' "
-                                                            sh "git switch '${GIT_BRANCH_TO_SWITCH}' "
+                                                            sh "git checkout '${GIT_BRANCH_TO_SWITCH}' "
                                                             sh "cat '${Manifest_Path}' "
                                                             sh "sed -i 's+${Image_Registry_Path}.*+${Image_Registry_Path}:${BUILD_NUMBER}+g' ${Manifest_Path} "
                                                             sh "cat '${Manifest_Path}' "
