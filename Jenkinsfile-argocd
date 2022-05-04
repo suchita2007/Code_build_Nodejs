@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   parameters {
-        string(defaultValue: "suchita2007", description: 'git config user.email ', name: 'GIT_CONFIG_EMAIL')
+        string(defaultValue: "suchita2007@gmail.com", description: 'git config user.email ', name: 'GIT_CONFIG_EMAIL')
         string(defaultValue: "suchita wankhade", description: 'git config user.name', name: 'GIT_CONFIG_USERNAME')
         string(defaultValue: "main", description: 'git switch branch', name: 'GIT_BRANCH_TO_SWITCH')
        
