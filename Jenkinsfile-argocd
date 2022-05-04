@@ -1,0 +1,106 @@
+pipeline {
+  agent any
+  
+  parameters {
+        string(defaultValue: "suchita2007@gmail.com", description: 'git config user.email ', name: 'GIT_CONFIG_EMAIL')
+        string(defaultValue: "suchita wankhade", description: 'git config user.name', name: 'GIT_CONFIG_USERNAME')
+        string(defaultValue: "main", description: 'git switch branch', name: 'GIT_BRANCH_TO_SWITCH')
+       
+        string(defaultValue: "asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj", description: 'put registry path for image ', name: 'Image_Registry_Path')
+        string(defaultValue: "k8s/deployment.yaml", description: 'path of k8s manifestfiles', name: 'Manifest_Path')
+    
+        
+    }
+
+
+  
+  
+  tools {nodejs "NodeJs"}
+  stages {
+        
+    stage('Git') {
+      steps {
+        git branch: 'main', credentialsId: 'github', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+      }
+    }
+     
+    stage('install') {
+      steps {
+        sh 'npm install'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+    stage('Build') {
+      steps {
+         sh 'npm run build'
+      }
+    } 
+    
+
+    
+    stage('Build Docker image'){
+          steps{
+               
+               sh 'docker build -t asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:${BUILD_NUMBER} .'
+          }
+      }
+    
+    stage('Docker push to Artifact Registry')
+    {       steps{
+                sh 'gcloud auth configure-docker asia-south1-docker.pkg.dev --quiet'
+                sh 'docker push asia-south1-docker.pkg.dev/business-transformers/my-source-repo-suchita/nodejs-proj:${BUILD_NUMBER}'
+           }
+    
+       }
+      
+    stage('Wait for SRE Approval') {
+         steps{
+           timeout(time:12, unit:'HOURS') {
+              input message:'Approve deployment?', submitter: 'sre-approvers'
+           }
+         }
+        }
+      
+
+   stage('Git Clone') {
+    steps {
+    git branch: 'main', credentialsId: 'gitlabsuchita', url: 'https://github.com/suchita2007/Code_build_Nodejs.git'
+   }
+   }
+
+     stage('Update GIT') {
+            
+               steps{
+                 script {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    withCredentials([usernamePassword(credentialsId: 'gitlabsuchita', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh "git config user.email '${GIT_CONFIG_EMAIL}' "
+                                                            sh "git config user.name '${GIT_CONFIG_USERNAME}' "
+                                                            sh "git switch '${GIT_BRANCH_TO_SWITCH}' "
+                                                            sh "cat '${Manifest_Path}' "
+                                                            sh "sed -i 's+${Image_Registry_Path}.*+${Image_Registry_Path}:${BUILD_NUMBER}+g' ${Manifest_Path} "
+                                                            sh "cat '${Manifest_Path}' "
+                                                            sh "git add '${Manifest_Path}' "
+                                                            sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
+                                                            withCredentials([string(credentialsId: 'GITLAB_TOKEN', variable: 'GITLAB_TOKEN')]) {
+                                                            sh "git push https://github.com/suchita2007/Code_build_Nodejs.git HEAD:'${GIT_BRANCH_TO_SWITCH}' "
+                              
+                                                            }
+
+               
+    }
+                 }
+                 }
+               }
+     }
+
+    
+    
+}
+}
